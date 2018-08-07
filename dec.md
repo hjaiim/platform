@@ -8,3 +8,14 @@
 
 4.修改端口号为6666.
 
+5.scss(1.node-sass 2.sass-loader)
+
+6.element-ui
+
+7.axios,qs
+
+8.hjai-utils
+
+9.sha256
+
+5.搭建路由&对应组件页
