@@ -10,6 +10,10 @@ import Login from '@/components/login/login'
 import BookList from '@/components/book/list'
 import BookCategory from '@/components/book/category'
 
+import UserList from '@/components/user/list'
+import UserChangePwd from '@/components/user/changepwd'
+import UserProfile from '@/components/user/profile'
+
 let router = new Router({
   mode: 'history',
   routes: [
@@ -33,6 +37,17 @@ let router = new Router({
     {
       path: '/',
       component: Home,
+      name: '用户管理',
+      menuShow: true,
+      leaf: true, // 只有一个节点
+      iconCls: 'iconfont icon-users', // 图标样式class
+      children: [
+        {path: '/user/list', component: UserList, name: '用户列表', menuShow: true}
+      ]
+    },
+    {
+      path: '/',
+      component: Home,
       name: '图书管理',
       menuShow: true,
       iconCls: 'iconfont icon-books',
@@ -41,6 +56,17 @@ let router = new Router({
         {path: '/book/category', component: BookCategory, name: '图书分类', menuShow: true}
       ]
     },
+    {
+      path: '/',
+      component: Home,
+      name: '设置',
+      menuShow: true,
+      iconCls: 'iconfont icon-setting1',
+      children: [
+        {path: '/user/profile', component: UserProfile, name: '个人信息', menuShow: true},
+        {path: '/user/changepwd', component: UserChangePwd, name: '修改密码', menuShow: true}
+      ]
+    }
   ]
 })
 

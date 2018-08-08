@@ -72,13 +72,7 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-    .menu-toggle {
-      background: #4a5064;
-      text-align: center;
-      color: white;
-      height: 26px;
-      line-height: 30px;
-    }
+
 
     .el-menu {
       height: 100%; /*写给不支持calc()的浏览器*/
@@ -109,6 +103,14 @@
       background-color: #7ed2df;
     }
   }
+  .menu-toggle {
+    background: #4a5064;
+    text-align: center;
+    color: white;
+    height: 26px;
+    line-height: 30px;
+  }
+
   .content-container {
     background: #ffffff;
     flex: 1;
