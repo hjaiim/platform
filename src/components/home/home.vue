@@ -4,7 +4,7 @@
     <el-col :span="24" class="topbar-wrap">
       <div class="topbar-logo topbar-btn">
         <a href="/">
-          <img src="@/assets/logo.png" style="padding-left:8px;">
+          <img src="@/assets/logo.png">
         </a>
       </div>
       <div class="topbar-title">
@@ -13,20 +13,11 @@
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
         <span class="el-dropdown-link userinfo-inner">
-            <i class="iconfont icon-user"></i> {{nickname}}
-            <i class="iconfont icon-down"></i>
+            <i class="iconfont icon-user"></i>{{nickname}}<i class="iconfont icon-down"></i>
         </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <div @click="jumpTo('/user/profile')">
-                <span style="color: #555555;font-size: 14px;">个人信息</span>
-              </div>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <div @click="jumpTo('/user/changepwd')">
-                <span style="color: #555555;font-size: 14px;">修改密码</span>
-              </div>
-            </el-dropdown-item>
+            <el-dropdown-item @click.native="jumpTo('/user/profile')">个人信息</el-dropdown-item>
+            <el-dropdown-item @click.native="jumpTo('/user/changepwd')">修改密码</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -93,7 +84,9 @@
     watch: {},
     methods: {
       jumpTo(url){
-
+        console.log('jumpTo-----url=',url);
+        this.defaultActiveIndex = url;
+        this.$router.push(url);
       },
       logout(){
 
@@ -109,5 +102,5 @@
 
 </script>
 <style type="text/css" lang="scss" rel="stylesheet/css" scoped>
-  @import "../../assets/css/layout.scss";
+  @import "../../assets/css/home.scss";
 </style>

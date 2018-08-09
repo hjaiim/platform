@@ -38,6 +38,7 @@ let router = new Router({
       path: '/',
       component: Home,
       name: '用户管理',
+      meta: {requireLogin: false},
       menuShow: true,
       leaf: true, // 只有一个节点
       iconCls: 'iconfont icon-users', // 图标样式class
@@ -50,6 +51,7 @@ let router = new Router({
       component: Home,
       name: '图书管理',
       menuShow: true,
+      meta: {requireLogin: false},
       iconCls: 'iconfont icon-books',
       children: [
         {path: '/book/list', component: BookList, name: '图书列表', menuShow: true},
@@ -61,6 +63,7 @@ let router = new Router({
       component: Home,
       name: '设置',
       menuShow: true,
+      meta: {requireLogin: false},
       iconCls: 'iconfont icon-setting1',
       children: [
         {path: '/user/profile', component: UserProfile, name: '个人信息', menuShow: true},
