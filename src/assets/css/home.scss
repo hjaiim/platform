@@ -77,7 +77,6 @@
       overflow-y: auto;
     }
 
-
     .el-menu {
       height: 100%; /*写给不支持calc()的浏览器*/
       height: -moz-calc(100% - 80px);
