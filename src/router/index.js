@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-import Home from '@/components/home/home'
+import Layout from '@/components/common/layout'
 import Index from '@/components/home/index'
 
 import Login from '@/components/login/login'
@@ -19,8 +19,8 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: '首页',
-      component: Home,
+      name: '默认首页',
+      component: Layout,
       meta: {requireLogin: false},
       leaf: true,
       menuShow: true,
@@ -36,7 +36,7 @@ let router = new Router({
     },
     {
       path: '/',
-      component: Home,
+      component: Layout,
       name: '用户管理',
       meta: {requireLogin: false},
       menuShow: true,
@@ -48,7 +48,7 @@ let router = new Router({
     },
     {
       path: '/',
-      component: Home,
+      component: Layout,
       name: '图书管理',
       menuShow: true,
       meta: {requireLogin: false},
@@ -60,7 +60,7 @@ let router = new Router({
     },
     {
       path: '/',
-      component: Home,
+      component: Layout,
       name: '设置',
       menuShow: true,
       meta: {requireLogin: false},
