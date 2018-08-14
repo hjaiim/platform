@@ -43,7 +43,12 @@ let router = new Router({
       leaf: true, // 只有一个节点
       iconCls: 'iconfont icon-users', // 图标样式class
       children: [
-        {path: '/user/list', component: UserList, name: '用户列表', menuShow: true}
+        {
+          path: '/user/list',
+          component: UserList,
+          name: '用户列表',
+          menuShow: true
+        }
       ]
     },
     {
@@ -54,8 +59,18 @@ let router = new Router({
       meta: {requireLogin: false},
       iconCls: 'iconfont icon-books',
       children: [
-        {path: '/book/list', component: BookList, name: '图书列表', menuShow: true},
-        {path: '/book/category', component: BookCategory, name: '图书分类', menuShow: true}
+        {
+          path: '/book/list',
+          component: BookList,
+          name: '图书列表',
+          menuShow: true
+        },
+        {
+          path: '/book/category',
+          component: BookCategory,
+          name: '图书分类',
+          menuShow: true
+        }
       ]
     },
     {
@@ -66,8 +81,18 @@ let router = new Router({
       meta: {requireLogin: false},
       iconCls: 'iconfont icon-setting1',
       children: [
-        {path: '/user/profile', component: UserProfile, name: '个人信息', menuShow: true},
-        {path: '/user/changepwd', component: UserChangePwd, name: '修改密码', menuShow: true}
+        {
+          path: '/user/profile',
+          component: UserProfile,
+          name: '个人信息',
+          menuShow: true
+        },
+        {
+          path: '/user/changepwd',
+          component: UserChangePwd,
+          name: '修改密码',
+          menuShow: true
+        }
       ]
     }
   ]
