@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// 为了解析post请求
+var bodyParser = require('body-parser');
+
 // 引入routes文件夹里面的文件，这些文件主要处理URL路由
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -17,8 +20,12 @@ app.set('view engine', 'ejs');
 
 // 使用上面引入的包
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

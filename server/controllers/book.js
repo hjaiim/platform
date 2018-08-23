@@ -27,4 +27,39 @@ bookController.find = (req,res)=>{
     })
 };
 
+/**
+ * 添加一条图书信息
+ * @param {*} req 
+ * @param {*} res 
+ */
+bookController.add = (req,res) =>{
+    let resObg = {};
+    let name = req.body.name;
+    let author = req.body.author;
+    let description = req.body.description;
+    let publishAt = req.body.publishAt;
+
+    if(name && author && description && publishAt){
+        Books.push({
+            id:Mock.Random.guid(),
+            name:name,
+            author:author,
+            description:description,
+            publishAt:publishAt
+        })
+        resObg.code = 2000;
+        resObg.msg = '创建成功';
+    }
+    else
+    {
+        resObg.code = 40002;
+        resObg.msg = '缺少参数';
+    }
+
+    res.json(resObg);
+};
+
+
+
+
 module.exports = bookController;
