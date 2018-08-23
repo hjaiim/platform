@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.1.0",
     "element-ui": "^2.4.5",
     "hjai-utils": "^1.0.5",
+    "mockjs": "^1.0.1-beta3",
     "qs": "^6.5.2",
     "sha256": "^0.2.0",
     "vue": "^2.5.2",
