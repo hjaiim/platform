@@ -8,8 +8,8 @@ Users.push({
   id: 1,
   username: 'admin', //用户名
   name: "风车车", //姓名
-  password: '123456', //密码
-  email: 'jerry9022@qq.com', //邮箱
+  password: 'admin', //密码
+  email: 'admin@qq.com', //邮箱
   nickname: '超级管理员', //昵称
   sex: 1, //性别
   addr: '北京市海淀区上地七街'
@@ -17,10 +17,10 @@ Users.push({
 
 Users.push({
   id: 2,
-  username: 'staff',
-  name: "枫叶", //姓名
-  password: '123123',
-  email: '1642499350@qq.com',
+  username: 'hjai',
+  name: "码影", //姓名
+  password: '123',
+  email: 'hjaiim@163.com',
   nickname: '普通管理员',
   sex: 1, //性别
   addr: '北京市海淀区'
