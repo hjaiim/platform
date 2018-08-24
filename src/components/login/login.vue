@@ -1,56 +1,91 @@
 <template>
-  <div>
-    <p>登录页</p>
-    <el-input v-model="account" placeholder="请输入账号"></el-input>
-    <el-input v-model="password" placeholder="请输入密码"></el-input>
-    <el-button @click="handleLogin">登录</el-button>
+  <div class="contain">
+    <div class="login-contain">
+      <p>登录页</p>
+      <el-input v-model="account" placeholder="请输入账号"></el-input>
+      <el-input v-model="password" placeholder="请输入密码"></el-input>
+      <el-button @click="handleLogin">登录</el-button>
+    </div>
   </div>
+
 </template>
 <script type="text/ecmascript-6">
-  import sha256 from 'sha256';
-  import API from 'api/api_login';
-  export default{
-    created(){
-      console.log(this.$route.query.redirect)
-    },
-    data(){
-      return {
-        account: '红包',
-        password: '123456liu'
-      }
-    },
-    components: {},
-    watch: {},
-    methods: {
-      handleLogin()
-      {
-        let loginParams = {
-          logon: this.account,
-          password: sha256(this.password)
-        }
+import sha256 from "sha256";
+import API from "api/api_login";
+export default {
+  created() {
+    console.log(this.$route.query.redirect);
+  },
+  data() {
+    return {
+      account: "admin",
+      password: "admin"
+    };
+  },
+  components: {},
+  watch: {},
+  methods: {
+    handleLogin() {
+      let loginParams = {
+        logon: this.account,
+        password: sha256(this.password)
+      };
 
-        API.login(loginParams).then((result)=>
-        {
-          console.log('登录成功');
+      API.login(loginParams)
+        .then(result => {
+          console.log("登录成功");
 
           //更新sessionStorage登录状态(登录)
-          this.$utils.data.setData('isLogin', true, 'ses');
+          // this.$utils.data.setData('isLogin', true, 'ses');
 
           //回调页面
           this.$router.push({
-            path: this.$route.query.redirect || '/'
+            path: this.$route.query.redirect || "/"
           });
-
-        }).catch((error)=>
-        {
-          console.log('登录失败');
-          console.log(error);
         })
-      }
+        .catch(error => {
+          console.log("登录失败");
+          console.log(error);
+        });
     }
   }
-
+};
 </script>
-<style type="text/css" lang="sass" rel="stylesheet/css" scoped>
+<style>
+body {
+  background: #dfe9fb;
+}
+</style>
 
+<style type="text/css" lang="scss" rel="stylesheet/css" scoped>
+@mixin positionAb($x, $y) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $x;
+  height: $y;
+  margin-left: -$x/2;
+  margin-top: -$y/2;
+  z-index: 99;
+}
+
+.contain {
+  width: 100%;
+  height: 100%;
+  background-color: aquamarine;
+}
+.login-contain {
+  @include positionAb(350px, 180px);
+  p {
+    text-align: center;
+  }
+  .el-input {
+    width: 350px;
+  }
+  .el-button {
+    width: 100%;
+    background-color: #409eff;
+    color: white;
+  }
+}
 </style>
