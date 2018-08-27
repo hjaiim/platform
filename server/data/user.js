@@ -25,3 +25,5 @@ Users.push({
   sex: 1, //性别
   addr: '北京市海淀区'
 });
+
+module.exports = Users;

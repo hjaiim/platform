@@ -6,10 +6,10 @@ import * as API from './'
 export default {
   // 登录
   login: params => {
-    return API.POST('user/userLogin', params)
+    return API.POST('user/login', params)
   },
   // 登出
   logout: params => {
-    return API.POST('user/userLoginOut', params)
+    return API.POST('user/logout', params)
   }
 }

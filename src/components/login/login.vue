@@ -2,7 +2,7 @@
   <div class="contain">
     <div class="login-contain">
       <p>登录页</p>
-      <el-input v-model="account" placeholder="请输入账号"></el-input>
+      <el-input v-model="username" placeholder="请输入账号"></el-input>
       <el-input v-model="password" placeholder="请输入密码"></el-input>
       <el-button @click="handleLogin">登录</el-button>
     </div>
@@ -10,7 +10,6 @@
 
 </template>
 <script type="text/ecmascript-6">
-import sha256 from "sha256";
 import API from "api/api_login";
 export default {
   created() {
@@ -18,8 +17,8 @@ export default {
   },
   data() {
     return {
-      account: "admin",
-      password: "admin"
+      username: "admin",
+      password: "admin1"
     };
   },
   components: {},
@@ -27,8 +26,8 @@ export default {
   methods: {
     handleLogin() {
       let loginParams = {
-        logon: this.account,
-        password: sha256(this.password)
+        username: this.username,
+        password: this.password
       };
 
       API.login(loginParams)

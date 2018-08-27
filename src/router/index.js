@@ -107,8 +107,7 @@ let router = new Router({
 
 // 全局钩子函数,在跳转之前执行
 router.beforeEach((to, from, next) => {
-  console.log('导航守卫--执行')
-
+  console.log('导航守卫--执行');
   if (to.meta.requireLogin) {
     if (utils.data.getData('isLogin', 'ses')) { // 登录状态
       next();
