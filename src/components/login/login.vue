@@ -11,14 +11,15 @@
 </template>
 <script type="text/ecmascript-6">
 import API from "api/api_login";
+import UserModel from "./model/UserModel.js";
 export default {
   created() {
-    console.log(this.$route.query.redirect);
+    console.log(`login---登录成功回调路由为:${this.$route.query.redirect}`);
   },
   data() {
     return {
       username: "admin",
-      password: "admin1"
+      password: "admin"
     };
   },
   components: {},
@@ -34,10 +35,14 @@ export default {
         .then(result => {
           console.log("登录成功");
 
-          //更新sessionStorage登录状态(登录)
-          // this.$utils.data.setData('isLogin', true, 'ses');
+          // 存储登录状态(已登录)到localStorage.
+          this.$utils.data.setData("isLogin", true);
 
-          //回调页面
+          // 存储个人信息
+          UserModel.update(result);
+          console.log(UserModel);
+
+          // 回调页面(默认去首页)
           this.$router.push({
             path: this.$route.query.redirect || "/"
           });

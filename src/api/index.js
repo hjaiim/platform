@@ -3,10 +3,12 @@
  */
 import axios from 'axios';
 import qs from 'qs';
-import *as utils from 'hjai-utils/dist/utils.min.js';
+import * as utils from 'hjai-utils/dist/utils.min.js';
 import router from '../router';
 import web_config from 'jslib/config/config';
-import { Loading } from 'element-ui';
+import {
+  Loading
+} from 'element-ui';
 
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
@@ -36,8 +38,8 @@ axios.interceptors.response.use(response => {
   if (response.data && response.data.code) {
     if (parseInt(response.data.code) === web_config.unLoginCode) { // 未登录
 
-      // 更新sessionStorage登录状态(登出)
-      utils.data.setData('isLogin', false, 'ses');
+      // 清空登录状态(登出)
+      utils.data.delData('isLogin');
 
       router.push({
         path: '/login',
@@ -102,8 +104,7 @@ axios.interceptors.response.use(response => {
       default:
         error.message = `连接出错(${error.response.status})!`;
     }
-  }
-  else {
+  } else {
     error.message = '网络异常,连接服务器失败!'
   }
   return Promise.reject(error);
@@ -111,11 +112,13 @@ axios.interceptors.response.use(response => {
 
 // 通用方法
 export const POST = (url, params) => {
-  return axios.post(url, params).then(res => res.data).then(res => res.data)
+  return axios.post(url, params).then(res => res.data)
 }
 
 export const GET = (url, params) => {
-  return axios.get(url, { params: params }).then(res => res.data)
+  return axios.get(url, {
+    params: params
+  }).then(res => res.data)
 }
 
 export const ALL = (promiseArr) => {

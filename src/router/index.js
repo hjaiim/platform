@@ -16,7 +16,7 @@ import UserChangePwd from '@/components/user/changepwd'
 import UserProfile from '@/components/user/profile'
 
 let router = new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -109,7 +109,7 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   console.log('导航守卫--执行');
   if (to.meta.requireLogin) {
-    if (utils.data.getData('isLogin', 'ses')) { // 登录状态
+    if (utils.data.getData('isLogin')) { // 登录状态
       next();
     }
     else { // 未登录,跳登录页,再回调当前页
@@ -121,7 +121,8 @@ router.beforeEach((to, from, next) => {
   }
   else {
     if (to.path === '/login') {
-      if (utils.data.getData('isLogin', 'ses')) { // 防止手动输入login,默认跳首页
+      // 已登录状态下,手动输入login路由.应跳首页
+      if (utils.data.getData('isLogin')) {
         next('/');
       }
       else {

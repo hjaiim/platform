@@ -12,9 +12,10 @@
       </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
-        <span class="el-dropdown-link userinfo-inner">
-            <i class="iconfont icon-user"></i>{{nickname}}<i class="iconfont icon-down"></i>
-        </span>
+          <span class="el-dropdown-link userinfo-inner">
+            <i class="iconfont icon-user"></i>{{nickname}}
+            <i class="iconfont icon-down"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="jumpTo('/user/profile')">个人信息</el-dropdown-item>
             <el-dropdown-item @click.native="jumpTo('/user/changepwd')">修改密码</el-dropdown-item>
@@ -41,15 +42,13 @@
                 <i :class="item.iconCls"></i>
                 <span slot="title">{{item.name}}</span>
               </template>
-              <el-menu-item v-for="term in item.children" :key="term.path" :index="term.path" v-if="term.menuShow"
-                            :class="$route.path==term.path?'is-active':''">
+              <el-menu-item v-for="term in item.children" :key="term.path" :index="term.path" v-if="term.menuShow" :class="$route.path==term.path?'is-active':''">
                 <i :class="term.iconCls"></i>
                 <span slot="title">{{term.name}}</span>
               </el-menu-item>
             </el-submenu>
             <!--没有二级目录-->
-            <el-menu-item v-else-if="item.leaf&&item.children&&item.children.length" :index="item.children[0].path"
-                          :class="$route.path==item.children[0].path?'is-active':''">
+            <el-menu-item v-else-if="item.leaf&&item.children&&item.children.length" :index="item.children[0].path" :class="$route.path==item.children[0].path?'is-active':''">
               <i :class="item.iconCls"></i>
               <span slot="title">{{item.children[0].name}}</span>
             </el-menu-item>
@@ -70,37 +69,34 @@
   </el-row>
 </template>
 <script type="text/ecmascript-6">
-  export default{
-    created(){
+import UserModel from "../login/model/UserModel.js";
+export default {
+  created() {},
+  data() {
+    return {
+      nickname: UserModel.nickName,
+      collapsed: false,
+      defaultActiveIndex: "0"
+    };
+  },
+  components: {},
+  watch: {},
+  methods: {
+    jumpTo(url) {
+      console.log("jumpTo-----url=", url);
+      this.defaultActiveIndex = url;
+      this.$router.push(url);
     },
-    data(){
-      return {
-        nickname: 'hjai',
-        collapsed: false,
-        defaultActiveIndex: '0'
-      }
+    logout() {},
+    collapse() {
+      this.collapsed = !this.collapsed;
     },
-    components: {},
-    watch: {},
-    methods: {
-      jumpTo(url){
-        console.log('jumpTo-----url=',url);
-        this.defaultActiveIndex = url;
-        this.$router.push(url);
-      },
-      logout(){
-
-      },
-      collapse(){
-        this.collapsed = !this.collapsed;
-      },
-      handleSelect(index){
-        this.defaultActiveIndex = index;
-      },
+    handleSelect(index) {
+      this.defaultActiveIndex = index;
     }
   }
-
+};
 </script>
 <style type="text/css" lang="scss" rel="stylesheet/css" scoped>
-  @import "../../assets/css/home.scss";
+@import "../../assets/css/home.scss";
 </style>
