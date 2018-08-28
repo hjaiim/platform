@@ -102,13 +102,14 @@ export default {
             .then(result => {
               // 登出成功
               // 清除登录信息
-              this.$utils.delData("isLogin");
+              this.$utils.data.delData("isLogin");
               // 清除用户信息
-              this.$utils.delData("user");
+              this.$utils.data.delData("user");
               //去登录页
-              this.$router.go("/login");
+              this.$router.push("/login");
             })
             .catch(err => {
+              console.log(err);
               this.$message.error({
                 showClose: true,
                 message: "登出失败",

@@ -48,5 +48,11 @@ userController.login = (req, res) => {
   }
 }
 
-
+userController.logout = (req, res) => {
+  req.session.destroy();
+  res.json({
+    code: 2000,
+    msg: '登出成功'
+  })
+}
 module.exports = userController;
