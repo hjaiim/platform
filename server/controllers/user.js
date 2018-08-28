@@ -4,6 +4,20 @@ const Users = require('../data/user');
 
 let userController = {};
 
+// 查看是否登录
+userController.checkLogin = (req, res, next) => {
+  console.log('检查登录状态');
+  //用户已经登录
+  if (req.session.userId) {
+    next();
+  } else {
+    res.json({
+      "errcode": 40001,
+      "errmsg": "您还没有登录"
+    });
+  }
+}
+
 // 登录
 userController.login = (req, res) => {
   let username = lodash.trim(req.body.username) || '';
@@ -48,11 +62,37 @@ userController.login = (req, res) => {
   }
 }
 
+// 登出
 userController.logout = (req, res) => {
   req.session.destroy();
   res.json({
     code: 2000,
     msg: '登出成功'
+  })
+}
+
+userController.find = (req, res) => {
+  let page = parseInt(req.body.page) || 1;
+  let pageSize = parseInt(req.body.pageSize) || 10;
+  let name = req.body.name || '';
+  let total = 0;
+
+  let resData = [];
+
+  if (name) { // 精准查询
+    let findArr = Users.filter(user => {
+      return user.indexOf(name) > -1;
+    })
+    total = findArr.length;
+    resData = findArr.filter((user, index) => index < page * pageSize && index >= pageSize * (page - 1));
+  } else { // 模糊查询
+    total = Users.length;
+    resData = Users.filter((user, index) => index < page * pageSize && index >= pageSize * (page - 1));
+  }
+
+  res.json({
+    total: total,
+    users: resData
   })
 }
 module.exports = userController;

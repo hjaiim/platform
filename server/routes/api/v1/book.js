@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var bookController = require('../../../controllers/book');
-const checkLogin = require('../../../controllers/checkLogin');
 
 //先检查登录
 // router.use(userController.checkLogin);
