@@ -9,7 +9,6 @@ export default {
     return API.POST('user/login', params)
   },
   // 登出
-  logout: params => {
-    return API.POST('user/logout', params)
-  }
+  logout: () => API.GET('user/logout')
+
 }

@@ -20,11 +20,12 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: '默认首页',
+      name: '框架页',
       component: Layout,
       meta: { requireLogin: false },
       leaf: true,
       menuShow: true,
+      redirect:'/index',
       iconCls: 'iconfont icon-home', // 图标样式class
       children: [
         {

@@ -38,7 +38,7 @@ axios.interceptors.response.use(response => {
   if (response.data && response.data.code) {
     if (parseInt(response.data.code) === web_config.unLoginCode) { // 未登录
 
-      // 清空登录状态(登出)
+      // 清除登录状态(登出)
       utils.data.delData('isLogin');
 
       router.push({

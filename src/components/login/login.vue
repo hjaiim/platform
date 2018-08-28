@@ -11,10 +11,9 @@
 </template>
 <script type="text/ecmascript-6">
 import API from "api/api_login";
-import UserModel from "./model/UserModel.js";
 export default {
   created() {
-    console.log(`login---登录成功回调路由为:${this.$route.query.redirect}`);
+    console.log(`login---登录成功回调路由为:${typeof this.$route.query.redirect ==='undefined'?'/':this.$route.query.redirect}`);
   },
   data() {
     return {
@@ -38,9 +37,8 @@ export default {
           // 存储登录状态(已登录)到localStorage.
           this.$utils.data.setData("isLogin", true);
 
-          // 存储个人信息
-          UserModel.update(result);
-          console.log(UserModel);
+          // 存储个人信息到localStorage
+          this.$utils.data.setData("user", result);
 
           // 回调页面(默认去首页)
           this.$router.push({

@@ -3,9 +3,9 @@
     <!--head-->
     <el-col :span="24" class="topbar-wrap">
       <div class="topbar-logo topbar-btn">
-        <a href="/">
+        <router-link to="/">
           <img src="@/assets/logo.png">
-        </a>
+        </router-link>
       </div>
       <div class="topbar-title">
         <span>后台管理系统</span>
@@ -69,12 +69,14 @@
   </el-row>
 </template>
 <script type="text/ecmascript-6">
-import UserModel from "../login/model/UserModel.js";
+import API from "api/api_login";
 export default {
-  created() {},
+  created() {
+    this.init();
+  },
   data() {
     return {
-      nickname: UserModel.nickName,
+      nickname: "",
       collapsed: false,
       defaultActiveIndex: "0"
     };
@@ -82,17 +84,53 @@ export default {
   components: {},
   watch: {},
   methods: {
+    init() {
+      let userinfo = this.getUserInfo();
+      this.nickname = userinfo.nickname;
+    },
     jumpTo(url) {
       console.log("jumpTo-----url=", url);
       this.defaultActiveIndex = url;
       this.$router.push(url);
     },
-    logout() {},
+    logout() {
+      this.$confirm("确认退出吗?", "提示", {
+        confirmButtonClass: "el-button--warning"
+      })
+        .then(() => {
+          API.logout()
+            .then(result => {
+              // 登出成功
+              // 清除登录信息
+              this.$utils.delData("isLogin");
+              // 清除用户信息
+              this.$utils.delData("user");
+              //去登录页
+              this.$router.go("/login");
+            })
+            .catch(err => {
+              this.$message.error({
+                showClose: true,
+                message: "登出失败",
+                duration: 2000
+              });
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消登出"
+          });
+        });
+    },
     collapse() {
       this.collapsed = !this.collapsed;
     },
     handleSelect(index) {
       this.defaultActiveIndex = index;
+    },
+    getUserInfo() {
+      return this.$utils.data.getData("user");
     }
   }
 };
