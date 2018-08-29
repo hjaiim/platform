@@ -6,9 +6,7 @@ import qs from 'qs';
 import * as utils from 'hjai-utils/dist/utils.min.js';
 import router from '../router';
 import web_config from 'jslib/config/config';
-import {
-  Loading
-} from 'element-ui';
+
 
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
@@ -17,24 +15,19 @@ axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
-  let loading = Loading.service({
-    fullscreen: true,
-    text: '拼命加载中...'
-  });
-
-  if (config.method === 'post') {
-    // config.data = qs.stringify(config.data);
-  }
+  // 看后台怎么解析数据(正常是不需要转译)
+  // if (config.method === 'post') {
+  //   config.data = qs.stringify(config.data);
+  // }
   return config;
 }, error => {
   // Do something with request error
-  closeLoading();
   return Promise.reject(error);
 });
 
 // 添加一个响应拦截器
 axios.interceptors.response.use(response => {
-  closeLoading();
+  // closeLoading();
   if (response.data && response.data.code) {
     if (parseInt(response.data.code) === web_config.unLoginCode) { // 未登录
 
@@ -55,7 +48,6 @@ axios.interceptors.response.use(response => {
   return response;
 }, error => {
   // Do something with response error
-  closeLoading();
   if (error.response) {
     switch (error.response.status) {
       case 400:
@@ -123,11 +115,6 @@ export const GET = (url, params) => {
 
 export const ALL = (promiseArr) => {
   return axios.all(promiseArr)
-}
-
-function closeLoading() {
-  let loading = Loading.service({});
-  loading.close();
 }
 
 /**

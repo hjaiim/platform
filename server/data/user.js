@@ -12,7 +12,7 @@ Users.push({
   email: 'hjaiim@163.com', //邮箱
   nickname: '超级管理员', //昵称
   sex: 1, //性别
-  addr: '辽宁大连偏远小山沟'
+  addr: '辽之国大连偏远小山沟'
 });
 
 Users.push({
