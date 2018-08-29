@@ -12,7 +12,7 @@ router.get('/logout',userController.logout);
 // 先检查登录(下面的路由都需要登录才可访问)
 router.use(userController.checkLogin);
 
-// 所有已注册的用户
-router.post('/find',userController.find);
+// 查询所有已注册的用户
+router.post('/search',userController.search);
 
 module.exports = router;

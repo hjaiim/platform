@@ -17,51 +17,45 @@ import UserProfile from '@/components/user/profile'
 
 let router = new Router({
   // mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: '框架页',
       component: Layout,
-      meta: { requireLogin: false },
       leaf: true,
       menuShow: true,
-      redirect:'/index',
+      redirect: '/index',
       iconCls: 'iconfont icon-home', // 图标样式class
-      children: [
-        {
-          path: '/index',
-          component: Index,
-          name: '首页',
-          menuShow: true
-        }
-      ]
+      children: [{
+        path: '/index',
+        component: Index,
+        name: '首页',
+        meta: {
+          requireLogin: true
+        },
+        menuShow: true
+      }]
     },
     {
       path: '/',
       component: Layout,
       name: '用户管理',
-      meta: { requireLogin: false },
       menuShow: true,
       leaf: true, // 只有一个节点
       iconCls: 'iconfont icon-users', // 图标样式class
-      children: [
-        {
-          path: '/user/list',
-          component: UserList,
-          name: '用户列表',
-          menuShow: true
-        }
-      ]
+      children: [{
+        path: '/user/list',
+        component: UserList,
+        name: '用户列表',
+        menuShow: true
+      }]
     },
     {
       path: '/',
       component: Layout,
       name: '图书管理',
       menuShow: true,
-      meta: { requireLogin: false },
       iconCls: 'iconfont icon-books',
-      children: [
-        {
+      children: [{
           path: '/book/list',
           component: BookList,
           name: '图书列表',
@@ -80,10 +74,8 @@ let router = new Router({
       component: Layout,
       name: '设置',
       menuShow: true,
-      meta: { requireLogin: false },
       iconCls: 'iconfont icon-setting1',
-      children: [
-        {
+      children: [{
           path: '/user/profile',
           component: UserProfile,
           name: '个人信息',
@@ -100,7 +92,9 @@ let router = new Router({
     {
       path: '/login',
       name: "登录",
-      meta: { requireLogin: false },
+      meta: {
+        requireLogin: false
+      },
       component: Login
     }
   ]
@@ -112,25 +106,21 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requireLogin) {
     if (utils.data.getData('isLogin')) { // 登录状态
       next();
-    }
-    else { // 未登录,跳登录页,再回调当前页
+    } else { // 未登录,跳登录页,再回调当前页
       next({
         path: '/login',
         query: getQuery(to.fullPath)
       })
     }
-  }
-  else {
+  } else {
     if (to.path === '/login') {
       // 已登录状态下,手动输入login路由.应跳首页
       if (utils.data.getData('isLogin')) {
         next('/');
-      }
-      else {
+      } else {
         next();
       }
-    }
-    else {
+    } else {
       next();
     }
   }
