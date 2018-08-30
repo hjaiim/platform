@@ -33,8 +33,12 @@
 
 ####   3.后端使用lodash工具类
 
-
-
+####   4.使用mongodb数据库
+            a.npm i mongoose -save
+            b.在app.js引入mongoose模块,连接本地数据库
+            c.根目录(针对server)下新建文件夹schemas，这个是数据集模块，在模块下新建users.js文件
+            d.根目录(针对server)下新建文件夹modules，这个是数据模型模块，在模块下新增users.js文件
+            e.
 
 
 

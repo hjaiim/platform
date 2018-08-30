@@ -1,6 +1,9 @@
 const lodash = require('lodash');
 // 假装已有2个用户
-const Users = require('../data/user');
+// const Users = require('../data/user');
+let Users = [];
+
+var usersModel = require('../models/usersModel');
 
 let userController = {};
 
@@ -28,6 +31,16 @@ userController.login = (req, res) => {
       "msg": "不合法的参数"
     });
   }
+
+
+
+  // 查询本地数据库
+  usersModel.find((err, users) => {
+    // 注意这是异步方法
+    if (err) return console.log(err);
+    console.log('find success');
+    Users = users;
+  })
 
   // 查找已注册用户信息(后期加入数据库)
   let user = lodash.find(Users, (u) => {
@@ -75,7 +88,7 @@ userController.search = (req, res) => {
   let pageSize = parseInt(req.body.pageSize) || 10;
   let name = req.body.name || '';
   console.log(name);
-  
+
   let total = 0;
 
   let resData = [];

@@ -6,7 +6,11 @@ var logger = require('morgan');
 
 // 为了解析post请求
 var bodyParser = require('body-parser');
+// 设置session
 var session = require('express-session');
+
+// 引入连接数据库模块
+var db = require('./utils/db.js');
 
 // 引入routes文件夹里面的文件，这些文件主要处理URL路由
 var indexRouter = require('./routes/index');
@@ -29,6 +33,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+db.conn();
+
 app.use(session({
   resave: false, // (是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。
   saveUninitialized: false,               // 初始化session时是否保存到存储。默认为true.
@@ -41,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 关联路由路径与引入的文件：
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 
 // 最后处理错误的http请求：
 // catch 404 and forward to error handler
