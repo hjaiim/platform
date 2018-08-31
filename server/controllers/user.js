@@ -32,46 +32,65 @@ userController.login = (req, res) => {
     });
   }
 
-
-
-  // 查询本地数据库
-  usersModel.find((err, users) => {
-    // 注意这是异步方法
-    if (err) return console.log(err);
-    console.log('find success');
-    Users = users;
+  usersModel.findOne({
+    username: username
+  }, (err, dbUser) => {
+    if (err) { // 用户不存在
+      return res.json({
+        code: '40003',
+        msg: "用户不存在"
+      })
+    } else { // 有用户,核对密码
+      if (dbUser.password === pwd) {
+        // 设置session
+        req.session.userId = dbUser.id;
+        // 返回用户信息
+        return res.json({
+          id: dbUser.id,
+          username: dbUser.username,
+          nickname: dbUser.nickname,
+          name: dbUser.name,
+          email: dbUser.email
+        });
+      } else {
+        return res.json({
+          "code": 40004,
+          "msg": "密码错误"
+        });
+      }
+    }
   })
 
   // 查找已注册用户信息(后期加入数据库)
-  let user = lodash.find(Users, (u) => {
-    return u.username === username;
-  });
+  // let user = lodash.find(Users, (u) => {
+  //   return u.username === username;
+  // });
 
-  if (!user) {
-    return res.json({
-      "code": 40003,
-      "msg": "用户不存在"
-    });
-  }
+  // if (!user) {
+  //   return res.json({
+  //     "code": 40003,
+  //     "msg": "用户不存在"
+  //   });
+  // }
 
-  if (user.password === pwd) { // 密码正确
-    // 设置session
-    req.session.userId = user.id;
+  // if (user.password === pwd) { // 密码正确
+  //   // 设置session
+  //   req.session.userId = user.id;
 
-    // 返回用户信息
-    return res.json({
-      id: user.id,
-      username: user.username,
-      nickname: user.nickname,
-      name: user.name,
-      email: user.email
-    });
-  } else {
-    return res.json({
-      "code": 40004,
-      "msg": "密码错误"
-    });
-  }
+  //   // 返回用户信息
+  //   return res.json({
+  //     id: user.id,
+  //     username: user.username,
+  //     nickname: user.nickname,
+  //     name: user.name,
+  //     email: user.email
+  //   });
+  // } else {
+  //   return res.json({
+  //     "code": 40004,
+  //     "msg": "密码错误"
+  //   });
+  // }
 }
 
 // 登出
