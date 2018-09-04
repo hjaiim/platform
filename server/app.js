@@ -33,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// 连接数据库
 db.conn();
 
 app.use(session({

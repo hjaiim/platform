@@ -32,6 +32,8 @@ userController.login = (req, res) => {
     });
   }
 
+  console.log(usersModel.findOne());
+  console.log('1111111');
   usersModel.findOne({
     username: username
   }, (err, dbUser) => {
@@ -41,7 +43,10 @@ userController.login = (req, res) => {
         msg: "用户不存在"
       })
     } else { // 有用户,核对密码
+      console.log(dbUser);
+      console.log('---------');
       if (dbUser.password === pwd) {
+
         // 设置session
         req.session.userId = dbUser.id;
         // 返回用户信息
@@ -113,12 +118,9 @@ userController.search = (req, res) => {
   let resData = [];
 
   if (name) { // 精准查询
-    console.log('-----')
-    console.log(name)
     let findArr = Users.filter(user => {
       return (user.name.indexOf(name) > -1);
     })
-    console.log(findArr)
     total = findArr.length;
     resData = findArr.filter((user, index) => index < page * pageSize && index >= pageSize * (page - 1));
   } else { // 模糊查询
@@ -131,4 +133,6 @@ userController.search = (req, res) => {
     users: resData
   })
 }
+
+
 module.exports = userController;
