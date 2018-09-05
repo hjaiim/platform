@@ -14,8 +14,8 @@ userController.checkLogin = (req, res, next) => {
     next();
   } else {
     res.json({
-      "errcode": 40001,
-      "errmsg": "您还没有登录"
+      code: 4001,
+      msg: "您还没有登录"
     });
   }
 }
@@ -102,6 +102,7 @@ userController.logout = (req, res) => {
   })
 }
 
+// 查找账户
 userController.search = (req, res) => {
   let page = parseInt(req.body.page) || 1;
   let pageSize = parseInt(req.body.pageSize) || 10;

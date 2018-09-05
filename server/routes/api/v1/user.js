@@ -9,6 +9,10 @@ router.post('/login', userController.login);
 // 登出
 router.get('/logout',userController.logout);
 
+// 上传头像
+router.post('/upload',upload.getHeadImg);
+router.ger('/upload',upload.getHeadImg);
+
 // 先检查登录(下面的路由都需要登录才可访问)
 router.use(userController.checkLogin);
 
@@ -18,7 +22,5 @@ router.post('/search',userController.search);
 // 个人信息
 // router.post('/profile',userController.profile);
 
-// 上传头像
-router.post('/upload',upload.getHeadImg);
 
 module.exports = router;
