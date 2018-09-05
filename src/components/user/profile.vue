@@ -31,14 +31,22 @@
     </el-col>
 
     <el-col :span="24">
+      <p>表单上传图片</p>
       <el-upload class="avatar-uploader" action="api/v1/user/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-col>
+
+    <el-col>
+      <p>base64上传图片</p>
+      <img :src="baseUrl" class="avatar" alt="图片">
+      <input type="file" ref="fileBtn" @change="changeFile">
+    </el-col>
   </el-row>
 </template>
 <script type="text/ecmascript-6">
+import API from "api/api_user.js";
 export default {
   created() {},
   data() {
@@ -61,7 +69,8 @@ export default {
           }
         ]
       },
-      imageUrl: ""
+      imageUrl: "",
+      baseUrl: ""
     };
   },
   components: {},
@@ -89,6 +98,31 @@ export default {
       }
 
       return (isJPG || isPNG) && isLt2M;
+    },
+    changeFile() {
+      let fileObj = this.$refs.fileBtn.files[0];
+      let fileType = fileObj.type;
+      let fileSize = fileObj.size;
+
+      let reader = new FileReader();
+      reader.readAsDataURL(fileObj);
+      reader.onload = e => {
+        let base64Str = e.target.result;
+        this.uploadImg(base64Str);
+      };
+    },
+    uploadImg(imgStr) {
+      // 上传base64
+
+      // post 上传
+      API.upload({ imgStr: imgStr })
+        .then(result => {
+          console.log(result);
+          this.baseUrl = result.imgUrl;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

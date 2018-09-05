@@ -9,8 +9,11 @@ router.post('/login', userController.login);
 // 登出
 router.get('/logout',userController.logout);
 
-// 上传头像
+// 上传头像(form表单)
 router.post('/upload',upload.getHeadImg);
+
+// 上传头像(base64)
+router.post('/base',upload.getBase);
 
 // 先检查登录(下面的路由都需要登录才可访问)
 router.use(userController.checkLogin);
