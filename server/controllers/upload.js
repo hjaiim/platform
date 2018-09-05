@@ -8,6 +8,10 @@ let fs = require('fs');
 let path = require('path');
 let locahost = 'http://127.0.0.1:3000';
 
+/**
+ * 以时间戳为唯一命名图片,仅限自己使用(用户量很少低).高用户量会重复
+ */
+
 uploadController.getHeadImg = function (req, res) {
   upload(req, res, function (err) {
     if (err) return console.log(err);
@@ -29,7 +33,7 @@ uploadController.getBase = function (req, res) {
   var dataBuffer = new Buffer(base64Str, 'base64');
 
   let timeStr = Date.now();
-  // 图片格式--时间戳+.图片后缀
+  // 图片格式--时间戳+.+图片后缀
   fs.writeFile(path.resolve(__dirname, `../public/images/${timeStr}.${imgSuffix}`), dataBuffer, (err) => {
     if (err) return console.log(err);
     console.log('图片写入成功');
@@ -37,7 +41,7 @@ uploadController.getBase = function (req, res) {
 
   res.json({
     code: 2000,
-    msg: '图片上传成功',
+    msg: '上传成功',
     imgUrl: `${locahost}/images/${timeStr}.${imgSuffix}`
   })
 }
