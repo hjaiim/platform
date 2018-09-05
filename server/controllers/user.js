@@ -3,7 +3,7 @@ const lodash = require('lodash');
 // const Users = require('../data/user');
 let Users = [];
 
-var usersModel = require('../models/usersModel');
+var UsersModel = require('../models/usersModel');
 
 let userController = {};
 
@@ -32,9 +32,7 @@ userController.login = (req, res) => {
     });
   }
 
-  console.log(usersModel.findOne());
-  console.log('1111111');
-  usersModel.findOne({
+  UsersModel.findOne({
     username: username
   }, (err, dbUser) => {
     if (err) { // 用户不存在
@@ -43,10 +41,7 @@ userController.login = (req, res) => {
         msg: "用户不存在"
       })
     } else { // 有用户,核对密码
-      console.log(dbUser);
-      console.log('---------');
       if (dbUser.password === pwd) {
-
         // 设置session
         req.session.userId = dbUser.id;
         // 返回用户信息
