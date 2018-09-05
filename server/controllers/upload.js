@@ -9,11 +9,11 @@ uploadController.getHeadImg = function (req, res) {
     if (err) return console.log(err);
     // 文件信息在req.file或者req.files中显示。
     console.log(req.file);
-    
+
     res.json({
       code: 2000,
       msg: '上传成功',
-      imgUrl: 'http:www.baidu.com'
+      imgUrl: `http://127.0.0.1:3000/images/${req.file.filename}`
     })
   });
 }

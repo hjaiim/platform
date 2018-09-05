@@ -11,7 +11,6 @@ router.get('/logout',userController.logout);
 
 // 上传头像
 router.post('/upload',upload.getHeadImg);
-router.ger('/upload',upload.getHeadImg);
 
 // 先检查登录(下面的路由都需要登录才可访问)
 router.use(userController.checkLogin);

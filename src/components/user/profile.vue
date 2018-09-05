@@ -1,42 +1,42 @@
 <template>
-	<el-row class="warp">
-		<el-col :span="24" class="warp-breadcrum" :loading="loading">
-			<el-breadcrumb separator="/">
-				<el-breadcrumb-item :to="{ path: '/' }">
-					<b>首页</b>
-				</el-breadcrumb-item>
-				<el-breadcrumb-item>设置</el-breadcrumb-item>
-				<el-breadcrumb-item>个人信息</el-breadcrumb-item>
-			</el-breadcrumb>
-		</el-col>
+  <el-row class="warp">
+    <el-col :span="24" class="warp-breadcrum" :loading="loading">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <b>首页</b>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>设置</el-breadcrumb-item>
+        <el-breadcrumb-item>个人信息</el-breadcrumb-item>
+      </el-breadcrumb>
+    </el-col>
 
-		<el-col :span="24" class="warp-main">
-			<el-form ref="form" :model="form" :rules="rules" label-width="80px">
-				<el-form-item label="账号">
-					<el-input v-model="form.useranme" disabled></el-input>
-				</el-form-item>
-				<el-form-item prop="nickname" label="昵称">
-					<el-input v-model="form.nickname"></el-input>
-				</el-form-item>
-				<el-form-item prop="name" label="姓名">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-				<el-form-item prop="email" label="邮箱">
-					<el-input v-model="form.email"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="handleSaveProfile">修改并保存</el-button>
-				</el-form-item>
-			</el-form>
-		</el-col>
+    <el-col :span="24" class="warp-main">
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="账号">
+          <el-input v-model="form.useranme" disabled></el-input>
+        </el-form-item>
+        <el-form-item prop="nickname" label="昵称">
+          <el-input v-model="form.nickname"></el-input>
+        </el-form-item>
+        <el-form-item prop="name" label="姓名">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item prop="email" label="邮箱">
+          <el-input v-model="form.email"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSaveProfile">修改并保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-col>
 
-		<el-col :span="24">
-			<el-upload class="avatar-uploader" action="api/v1/user/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-				<img v-if="imageUrl" :src="imageUrl" class="avatar">
-				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
-			</el-upload>
-		</el-col>
-	</el-row>
+    <el-col :span="24">
+      <el-upload class="avatar-uploader" action="api/v1/user/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-col>
+  </el-row>
 </template>
 <script type="text/ecmascript-6">
 export default {
@@ -69,15 +69,18 @@ export default {
   methods: {
     handleSaveProfile() {},
     handleAvatarSuccess(res, file) {
-      console.log(res);
-      console.log(file);
-      this.imageUrl = URL.createObjectURL(file.raw);
+      // 读取本地上传图片
+      // this.imageUrl = URL.createObjectURL(file.raw);
+
+      // 读取后端返回上传成功之后的图片服务器地址
+      this.imageUrl = res.imgUrl;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isPNG = file.type === "image/png";
       const isLt2M = file.size / 1024 / 1024 / 2;
 
+      debugger;
       if (!isJPG && !isPNG) {
         this.$message.error("请选择png/jpg格式图片");
       }
