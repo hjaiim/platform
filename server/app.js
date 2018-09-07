@@ -26,6 +26,7 @@ app.set('view engine', 'ejs');
 // 使用上面引入的包
 app.use(logger('dev'));
 
+// 上传base64,字符体积大于默认值,所以扩充到50mb
 app.use(bodyParser.json({
   limit: '50mb'
 })); // 默认100kb
