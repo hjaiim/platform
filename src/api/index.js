@@ -7,14 +7,15 @@ import * as utils from 'hjai-utils/dist/utils.min.js';
 import router from '../router';
 import web_config from 'jslib/config/config';
 
-
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// axios默认提交使用这种格式application/json
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 axios.defaults.timeout = web_config.timeout;
 axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
+  console.log(config);
   // 看后台怎么解析数据(正常是不需要转译)
   // if (config.method === 'post') {
   //   config.data = qs.stringify(config.data);

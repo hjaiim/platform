@@ -89,7 +89,6 @@ export default {
       const isPNG = file.type === "image/png";
       const isLt2M = file.size / 1024 / 1024 / 2;
 
-      debugger;
       if (!isJPG && !isPNG) {
         this.$message.error("请选择png/jpg格式图片");
       }
