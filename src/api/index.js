@@ -5,7 +5,7 @@ import axios from 'axios';
 import qs from 'qs';
 import * as utils from 'hjai-utils/dist/utils.min.js';
 import router from '../router';
-import web_config from 'jslib/config/config';
+import web_config from 'libs/config/config';
 
 // axios默认提交使用这种格式application/json
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
