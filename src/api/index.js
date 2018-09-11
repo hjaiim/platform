@@ -8,18 +8,17 @@ import router from '../router';
 import web_config from 'libs/config/config';
 
 // axios默认提交使用这种格式application/json
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 axios.defaults.timeout = web_config.timeout;
 axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
-  console.log(config);
-  // 看后台怎么解析数据(正常是不需要转译)
-  // if (config.method === 'post') {
-  //   config.data = qs.stringify(config.data);
-  // }
+  // 参数需要Form Data 格式
+  if (config.method === 'post' && config.needFormData) {
+    config.data = qs.stringify(config.data);
+  }
   return config;
 }, error => {
   // Do something with request error
@@ -28,7 +27,6 @@ axios.interceptors.request.use(config => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use(response => {
-  // closeLoading();
   if (response.data && response.data.code) {
     if (parseInt(response.data.code) === web_config.unLoginCode) { // 未登录
 
@@ -41,7 +39,7 @@ axios.interceptors.response.use(response => {
       })
     }
 
-    // 参数格式不对,接口正常,code异常(后台接口调通,会返回一个code状态码).
+    // 参数格式不对,接口正常,code异常(正常情况下.后台接口调通,会返回一个code状态码).
     if (parseInt(response.data.code) !== web_config.successCode) {
       return Promise.reject(response.data)
     }
@@ -103,9 +101,8 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error);
 });
 
-// 通用方法
-export const POST = (url, params) => {
-  return axios.post(url, params).then(res => res.data)
+export const POST = (url, params, config = {}) => {
+  return axios.post(url, params, config).then(res => res.data)
 }
 
 export const GET = (url, params) => {
