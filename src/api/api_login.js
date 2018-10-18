@@ -10,5 +10,6 @@ export default {
   },
   // 登出
   logout: () => API.GET('user/logout')
+  // logout: params => API.GET('user/logout', params)
 
 }

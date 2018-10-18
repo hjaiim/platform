@@ -24,6 +24,7 @@
         <el-form-item prop="email" label="邮箱">
           <el-input v-model="form.email"></el-input>
         </el-form-item>
+
         <el-form-item>
           <el-button type="primary" @click="handleSaveProfile">修改并保存</el-button>
         </el-form-item>
@@ -31,7 +32,7 @@
     </el-col>
 
     <el-col :span="24">
-      <p>表单上传图片</p>
+      <p>饿了么表单上传图片</p>
       <el-upload class="avatar-uploader" action="api/v1/user/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -40,8 +41,14 @@
 
     <el-col>
       <p>base64上传图片</p>
-      <img :src="baseUrl" class="avatar" alt="图片">
-      <input type="file" ref="fileBtn" @change="changeFile">
+      <img v-show='baseUrl' :src="baseUrl" class="avatar" alt="图片">
+      <input type="file" ref="fileBtn1" @change="changeBaseFile">
+    </el-col>
+
+    <el-col>
+      <p>原生表单上传图片</p>
+      <img v-show='basicUrl' :src="basicUrl" class="avatar" alt="图片">
+      <input type="file" ref="fileBtn2" @change="changeFile">
     </el-col>
   </el-row>
 </template>
@@ -70,7 +77,8 @@ export default {
         ]
       },
       imageUrl: "",
-      baseUrl: ""
+      baseUrl: "",
+      basicUrl: ""
     };
   },
   components: {},
@@ -98,8 +106,8 @@ export default {
 
       return (isJPG || isPNG) && isLt2M;
     },
-    changeFile() {
-      let fileObj = this.$refs.fileBtn.files[0];
+    changeBaseFile() {
+      let fileObj = this.$refs.fileBtn1.files[0];
       let fileType = fileObj.type;
       let fileSize = fileObj.size;
 
@@ -110,9 +118,32 @@ export default {
         this.uploadImg(base64Str);
       };
     },
+    changeFile() {
+      let fileObj = this.$refs.fileBtn2.files[0];
+      let fileType = fileObj.type;
+      let fileSize = fileObj.size;
+
+      //新建formdata
+      let formData = new FormData();
+      formData.append("file", fileObj);
+      //可以通过get()方法获取方才追加的值
+      console.log(formData.get("file"));
+
+      //方式1:axios发送图片数据
+      API.send(formData)
+        .then(result => {
+          console.log(`图片地址:${result.imgUrl}`);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      //方式2:XHR发送图片数据
+      this.sendDataByXHR();
+    },
+    sendDataByXHR() {},
     uploadImg(imgStr) {
       // 上传base64
-
       // post 上传
       API.upload({ imgStr: imgStr })
         .then(result => {
@@ -121,7 +152,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
-        }); 
+        });
     }
   }
 };

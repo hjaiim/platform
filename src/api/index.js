@@ -15,7 +15,10 @@ axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
-  // 参数需要Form Data 格式
+  //设置全局参数
+  setGlobalParames(config);
+  debugger
+  // 参数设置Form Data 格式
   if (config.method === 'post' && config.needFormData) {
     config.data = qs.stringify(config.data);
   }
@@ -126,4 +129,31 @@ function getQuery(path) {
     queryObj['redirect'] = path.replace('/', '');
   }
   return queryObj;
+}
+
+/**
+ * 设置全局请求参数
+ * @param {axios config} $config 
+ */
+function setGlobalParames($config) {
+  if (JSON.stringify(web_config.globalParameObj) == '{}') {
+    return;
+  };
+
+  if ($config.method === 'get') {
+    merge($config.params, web_config.globalParameObj);
+  }
+
+  if ($config.method === 'post') {
+    merge($config.data, web_config.globalParameObj);
+  }
+}
+
+/**
+ * 合并对象(浅复制)
+ * @param {目标对象} target
+ * @param {源对象} source
+ */
+function merge(target = {}, source) {
+  Object.assign(target, source);
 }
