@@ -15,9 +15,8 @@ axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
-  //设置全局参数
+  // 设置全局参数
   setGlobalParames(config);
-  debugger
   // 参数设置Form Data 格式
   if (config.method === 'post' && config.needFormData) {
     config.data = qs.stringify(config.data);
